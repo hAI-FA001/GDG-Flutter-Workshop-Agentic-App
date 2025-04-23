@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../providers/gemini.dart';
+import 'gemini_tools.dart';
 
 part 'gemini_chat_service.g.dart';
 
@@ -28,6 +29,27 @@ class GeminiChatService {
       if (responseText != null) {
         logStateNotifier.logLlmText(responseText);
         chatStateNotifier.appendToMessage(llmMessage.id, responseText);
+      }
+
+      if (response.functionCalls.isNotEmpty) {
+        final geminiTools = ref.read(geminiToolsProvider);
+        final functionResultResponse = await chatSession.sendMessage(
+          Content.functionResponses([
+            for (final functionCall in response.functionCalls)
+              FunctionResponse(
+                functionCall.name,
+                geminiTools.handleFunctionCall(
+                  functionCall.name,
+                  functionCall.args,
+                ),
+              ),
+          ]),
+        );
+        final responseText = functionResultResponse.text;
+        if (responseText != null) {
+          logStateNotifier.logLlmText(responseText);
+          chatStateNotifier.appendToMessage(llmMessage.id, responseText);
+        }
       }
     } catch (e, st) {
       logStateNotifier.logError(e, st: st);
