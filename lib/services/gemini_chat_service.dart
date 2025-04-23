@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:colorist_ui/colorist_ui.dart';
 import 'package:firebase_vertexai/firebase_vertexai.dart';
@@ -17,6 +18,10 @@ final conversationStateProvider = StateProvider(
 class GeminiChatService {
   GeminiChatService(this.ref);
   final Ref ref;
+
+  Future<void> notifyColorSelection(ColorData color) => sendMessage(
+    'User selected color from history: ${json.encode(color.toLLMContextMap())}',
+  );
 
   Future<void> sendMessage(String message) async {
     final chatSession = await ref.read(chatSessionProvider.future);
