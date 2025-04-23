@@ -1,0 +1,14 @@
+{
+    "flutter": {
+        "platforms": {
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "gdg-cuilhr-workshop",
+                    "configurations": {
+                        "web": "1:124690427390:web:457e1ff71922cc91a524af"
+                    }
+                }
+            }
+        }
+    }
+}
