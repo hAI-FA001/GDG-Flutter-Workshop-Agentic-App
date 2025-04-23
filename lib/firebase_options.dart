@@ -53,7 +53,7 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDAQfJ7CPlluoFhm-RlNDFJlXyYj7eDsFE',
+    apiKey: 'rotated key',
     appId: '1:124690427390:web:457e1ff71922cc91a524af',
     messagingSenderId: '124690427390',
     projectId: 'gdg-cuilhr-workshop',
