@@ -15,6 +15,7 @@ class MainApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final model = ref.watch(geminiModelProvider);
+    final conversationState = ref.watch(conversationStateProvider);
 
     return MaterialApp(
       theme: ThemeData(
@@ -23,6 +24,7 @@ class MainApp extends ConsumerWidget {
       home: model.when(
         data:
             (data) => MainScreen(
+              conversationState: conversationState,
               sendMessage: (text) {
                 ref.read(geminiChatServiceProvider).sendMessage(text);
               },
